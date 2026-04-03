@@ -1,29 +1,15 @@
-# Data Engineering Portfolio
+# Batch Pipeline (Airflow + Postgres)
 
-This repository contains hands-on data engineering projects built using open-source tools.
+This project ingests a transactional dataset into PostgreSQL using an Airflow DAG.
 
-## 🧱 Current Project: Batch Data Pipeline
+## Structure
 
-Built a local data platform simulating production workflows:
+- `schemas/l0/` → raw schema definitions (JSON)
+- `scripts/` → ingestion logic
+- `airflow/dags/` → orchestration layer
+- `data/` → source dataset
 
-- Orchestration: Airflow
-- Storage: PostgreSQL
-- Ingestion: Python
-- Containerization: Docker
+## Run locally
 
-## 📊 Pipeline Overview
-
-CSV → Airflow DAG → PostgreSQL (raw layer)
-
-## 🧠 Key Features
-
-- Schema-driven ingestion using JSON configs
-- Environment-based configuration (no hardcoded credentials)
-- Modular pipeline design (parsers, schema, ingestion separated)
-- Dockerized local environment
-
-## 🚀 Next Steps
-
-- Add dbt for transformation layer
-- Build analytics models (facts & dimensions)
-- Add data quality checks
+```bash
+docker compose up -d
