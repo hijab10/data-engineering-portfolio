@@ -1,0 +1,55 @@
+{
+  "table_name": "raw_transactions",
+  "csv_path": "/opt/airflow/data/orders_raw.csv",
+  "columns": [
+    {
+      "target_name": "invoice_no",
+      "csv_column": "InvoiceNo",
+      "sql_type": "TEXT",
+      "parser_type": "text"
+    },
+    {
+      "target_name": "stock_code",
+      "csv_column": "StockCode",
+      "sql_type": "TEXT",
+      "parser_type": "text"
+    },
+    {
+      "target_name": "description",
+      "csv_column": "Description",
+      "sql_type": "TEXT",
+      "parser_type": "text"
+    },
+    {
+      "target_name": "quantity",
+      "csv_column": "Quantity",
+      "sql_type": "INT",
+      "parser_type": "int"
+    },
+    {
+      "target_name": "invoice_date",
+      "csv_column": "InvoiceDate",
+      "sql_type": "TIMESTAMP",
+      "parser_type": "timestamp",
+      "format": "%m/%d/%Y %H:%M"
+    },
+    {
+      "target_name": "unit_price",
+      "csv_column": "UnitPrice",
+      "sql_type": "NUMERIC",
+      "parser_type": "float"
+    },
+    {
+      "target_name": "customer_id",
+      "csv_column": "CustomerID",
+      "sql_type": "FLOAT",
+      "parser_type": "float"
+    },
+    {
+      "target_name": "country",
+      "csv_column": "Country",
+      "sql_type": "TEXT",
+      "parser_type": "text"
+    }
+  ]
+}
