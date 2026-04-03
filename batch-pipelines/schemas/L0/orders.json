@@ -4,7 +4,7 @@
   "columns": [
     {
       "target_name": "invoice_no",
-      "csv_column": "InvoiceNo",
+      "csv_column": "Invoice",
       "sql_type": "TEXT",
       "parser_type": "text"
     },
@@ -35,13 +35,13 @@
     },
     {
       "target_name": "unit_price",
-      "csv_column": "UnitPrice",
+      "csv_column": "Price",
       "sql_type": "NUMERIC",
       "parser_type": "float"
     },
     {
       "target_name": "customer_id",
-      "csv_column": "CustomerID",
+      "csv_column": "Customer ID",
       "sql_type": "FLOAT",
       "parser_type": "float"
     },
