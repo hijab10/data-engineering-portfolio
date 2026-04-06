@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: raw
+    tables:
+      - name: l0_orders
+        description: Raw ingested orders data loaded by Airflow from the source CSV.
+        columns:
+          - name: stock_code
+            data_tests:
+              - not_null
+          - name: invoice_date
+            data_tests:
+              - not_null

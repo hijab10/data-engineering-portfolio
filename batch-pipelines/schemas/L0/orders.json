@@ -1,5 +1,6 @@
 {
-  "table_name": "raw_transactions",
+  "schema_name": "raw",
+  "table_name": "l0_orders",
   "csv_path": "/opt/airflow/data/orders_raw.csv",
   "columns": [
     {

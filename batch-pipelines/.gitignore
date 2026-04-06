@@ -2,3 +2,11 @@
 __pycache__/
 *.pyc
 airflow/logs/
+.venv
+imp.sh
+
+# dbt artifacts
+
+dbt/orders/target/
+dbt/orders/dbt_packages/
+dbt/orders/logs/

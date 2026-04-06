@@ -1,0 +1,20 @@
+name: orders
+version: "1.0.0"
+config-version: 2
+
+profile: orders
+
+model-paths: ["models"]
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  orders:
+    staging:
+      +materialized: view
+      +schema: staging
+    business:
+      +materialized: view
+      +schema: business

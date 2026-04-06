@@ -27,7 +27,7 @@ def get_db_connection() -> PgConnection:
     )
 
 
-def build_create_table_sql(table_name: str, columns: list[dict[str, Any]]) -> str:
+def build_create_table_sql(schema_name: str, table_name: str, columns: list[dict[str, Any]]) -> str:
     column_definitions = [
         f"{column['target_name']} {column['sql_type']}"
         for column in columns
@@ -35,15 +35,18 @@ def build_create_table_sql(table_name: str, columns: list[dict[str, Any]]) -> st
     columns_sql = ",\n    ".join(column_definitions)
 
     return f"""
-DROP TABLE IF EXISTS {table_name};
-CREATE TABLE {table_name} (
+CREATE SCHEMA IF NOT EXISTS {schema_name};
+
+DROP TABLE IF EXISTS {schema_name}.{table_name};
+
+CREATE TABLE {schema_name}.{table_name} (
     {columns_sql}
 );
 """
 
 
-def create_table(conn: PgConnection, table_name: str, columns: list[dict[str, Any]]) -> None:
-    create_table_sql = build_create_table_sql(table_name, columns)
+def create_table(conn: PgConnection, schema_name: str,table_name: str, columns: list[dict[str, Any]]) -> None:
+    create_table_sql = build_create_table_sql(schema_name, table_name, columns)
 
     with conn.cursor() as cur:
         cur.execute(create_table_sql)
@@ -66,6 +69,7 @@ def transform_row(row: dict[str, str], columns: list[dict[str, Any]]) -> tuple[A
 def insert_rows_from_csv(
     conn: PgConnection,
     csv_path: str,
+    schema_name: str,
     table_name: str,
     columns: list[dict[str, Any]],
 ) -> int:
@@ -74,7 +78,7 @@ def insert_rows_from_csv(
     placeholders = ", ".join(["%s"] * len(target_columns))
 
     insert_sql = f"""
-INSERT INTO {table_name} ({columns_sql})
+INSERT INTO {schema_name}.{table_name} ({columns_sql})
 VALUES ({placeholders})
 """
 
@@ -96,6 +100,7 @@ VALUES ({placeholders})
 def main() -> None:
     schema = load_schema(SCHEMA_PATH)
 
+    schema_name = schema["schema_name"]
     table_name = schema["table_name"]
     csv_path = schema["csv_path"]
     columns = schema["columns"]
@@ -103,14 +108,15 @@ def main() -> None:
     conn = get_db_connection()
 
     try:
-        create_table(conn, table_name, columns)
+        create_table(conn, schema_name, table_name, columns)
         inserted_rows = insert_rows_from_csv(
             conn=conn,
             csv_path=csv_path,
+            schema_name=schema_name,
             table_name=table_name,
             columns=columns,
         )
-        print(f"{table_name} loaded successfully: {inserted_rows} rows inserted")
+        print(f"{schema_name}.{table_name} loaded successfully: {inserted_rows} rows inserted")
     finally:
         conn.close()
 

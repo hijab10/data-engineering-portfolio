@@ -1,29 +1,30 @@
 # Data Engineering Portfolio
 
-This repository contains hands-on data engineering projects built using open-source tools.
+This repository contains hands-on data engineering projects built with open-source tools and production-style design patterns.
 
-## 🧱 Current Project: Batch Data Pipeline
+## Current project: Batch pipeline for retail orders
 
-Built a local data platform simulating production workflows:
+This project implements a layered batch data pipeline using Airflow, PostgreSQL, Python, and dbt.
 
-- Orchestration: Airflow
-- Storage: PostgreSQL
-- Ingestion: Python
-- Containerization: Docker
+### Architecture
 
-## 📊 Pipeline Overview
+- **Ingestion / orchestration:** Airflow
+- **Storage:** PostgreSQL
+- **Transformation:** dbt
+- **Containerization:** Docker
 
-CSV → Airflow DAG → PostgreSQL (raw layer)
+### Layered data model
 
-## 🧠 Key Features
+- **raw.l0_orders**  
+  Raw ingested source data loaded from CSV through an Airflow DAG
 
-- Schema-driven ingestion using JSON configs
-- Environment-based configuration (no hardcoded credentials)
-- Modular pipeline design (parsers, schema, ingestion separated)
-- Dockerized local environment
+- **staging.l1_orders**  
+  Cleaned and standardized staging model built in dbt
 
-## 🚀 Next Steps
+- **business.l2_orders_daily**  
+  Business-facing daily sales summary model built in dbt
 
-- Add dbt for transformation layer
-- Build analytics models (facts & dimensions)
-- Add data quality checks
+### Current pipeline flow
+
+```text
+CSV → Airflow DAG → raw.l0_orders → dbt source() → staging.l1_orders → dbt ref() → business.l2_orders_daily
