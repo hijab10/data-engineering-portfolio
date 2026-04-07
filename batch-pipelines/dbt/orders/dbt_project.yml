@@ -5,6 +5,7 @@ config-version: 2
 profile: orders
 
 model-paths: ["models"]
+seed-paths: ["seeds"]
 target-path: "target"
 clean-targets:
   - "target"
@@ -18,3 +19,8 @@ models:
     business:
       +materialized: view
       +schema: business
+
+seeds:
+  orders:
+    l0_orders:
+      +schema: raw

@@ -23,11 +23,12 @@ dbt-compile:
 	dbt deps --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR) && \
 	dbt debug --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR) && \
 	dbt compile --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR)
-
+	
 dbt-build:
-	dbt deps --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR)
-	dbt debug --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR)
-	dbt seed --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR)
+	@export $$(grep -v '^#' .env | xargs) && \
+	dbt deps --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR) && \
+	dbt debug --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR) && \
+	dbt seed --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR) && \
 	dbt build --project-dir $(DBT_DIR) --profiles-dir $(DBT_PROFILES_DIR)
 
 ci: package test dbt-build
