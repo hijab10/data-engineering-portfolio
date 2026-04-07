@@ -45,6 +45,7 @@ flowchart LR
 
 ```text
 CSV → Airflow DAG → raw.l0_orders → dbt source() → staging.l1_orders → dbt ref() → business.l2_orders_daily
+```
 
 ### Data quality and transformations
 - Source-level tests ensure data completeness (e.g. not null checks)
