@@ -30,7 +30,7 @@ jobs:
           --health-retries=5
 
     env:
-      DBT_HOST: postgres
+      DBT_HOST: localhost
       DBT_PORT: 5432
       DBT_DBNAME: postgres
       DBT_SCHEMA: public
