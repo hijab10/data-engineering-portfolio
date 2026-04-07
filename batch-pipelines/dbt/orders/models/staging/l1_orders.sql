@@ -1,26 +1,35 @@
 with source as (
 
-    select *
-    from {{ source('raw', 'l0_orders') }}
+    select * from {{ source('raw', 'l0_orders') }}
 
 ),
 
-cleaned as (
+typed as (
 
     select
         trim(invoice_no::text) as invoice_no,
         trim(stock_code::text) as stock_code,
-        trim(description) as description,
+        description,
         quantity,
         invoice_date,
         unit_price,
         customer_id,
-        trim(country) as country,
-        case when invoice_no like 'C%' then true else false end as is_cancellation,
-        case when quantity < 0 then true else false end as is_return
+        country
     from source
 
 )
 
-select *
-from cleaned
+select
+    invoice_no,
+    stock_code,
+    description,
+    quantity,
+    invoice_date,
+    unit_price,
+    customer_id,
+    country,
+    case
+        when invoice_no like 'C%' then true
+        else false
+    end as is_cancelled
+from typed
