@@ -8,8 +8,8 @@ with source as (
 cleaned as (
 
     select
-        trim(invoice_no) as invoice_no,
-        trim(stock_code) as stock_code,
+        trim(invoice_no::text) as invoice_no,
+        trim(stock_code::text) as stock_code,
         trim(description) as description,
         quantity,
         invoice_date,
