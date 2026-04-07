@@ -27,7 +27,9 @@ flowchart LR
     F --> G[business.l2_orders_daily]
 
     H[dbt seed CI] --> C
-    
+
+```
+
 ### Layered data model
 
 - **raw.l0_orders**  
