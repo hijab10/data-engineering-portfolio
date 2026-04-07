@@ -32,7 +32,9 @@ def parse_float(value: str | None, _: dict[str, Any] | None = None) -> float | N
     return float(cleaned_value)
 
 
-def parse_timestamp(value: str | None, column_config: dict[str, Any] | None = None) -> datetime | None:
+def parse_timestamp(
+    value: str | None, column_config: dict[str, Any] | None = None
+) -> datetime | None:
     if value is None:
         return None
 
@@ -41,7 +43,9 @@ def parse_timestamp(value: str | None, column_config: dict[str, Any] | None = No
         return None
 
     if column_config is None or "format" not in column_config:
-        raise ValueError("Timestamp column is missing required 'format' in schema config.")
+        raise ValueError(
+            "Timestamp column is missing required 'format' in schema config."
+        )
 
     return datetime.strptime(cleaned_value, column_config["format"])
 

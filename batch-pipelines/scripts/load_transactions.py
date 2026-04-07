@@ -27,10 +27,11 @@ def get_db_connection() -> PgConnection:
     )
 
 
-def build_create_table_sql(schema_name: str, table_name: str, columns: list[dict[str, Any]]) -> str:
+def build_create_table_sql(
+    schema_name: str, table_name: str, columns: list[dict[str, Any]]
+) -> str:
     column_definitions = [
-        f"{column['target_name']} {column['sql_type']}"
-        for column in columns
+        f"{column['target_name']} {column['sql_type']}" for column in columns
     ]
     columns_sql = ",\n    ".join(column_definitions)
 
@@ -45,7 +46,9 @@ CREATE TABLE {schema_name}.{table_name} (
 """
 
 
-def create_table(conn: PgConnection, schema_name: str,table_name: str, columns: list[dict[str, Any]]) -> None:
+def create_table(
+    conn: PgConnection, schema_name: str, table_name: str, columns: list[dict[str, Any]]
+) -> None:
     create_table_sql = build_create_table_sql(schema_name, table_name, columns)
 
     with conn.cursor() as cur:
@@ -54,7 +57,9 @@ def create_table(conn: PgConnection, schema_name: str,table_name: str, columns: 
     conn.commit()
 
 
-def transform_row(row: dict[str, str], columns: list[dict[str, Any]]) -> tuple[Any, ...]:
+def transform_row(
+    row: dict[str, str], columns: list[dict[str, Any]]
+) -> tuple[Any, ...]:
     transformed_values: list[Any] = []
 
     for column in columns:
@@ -116,7 +121,9 @@ def main() -> None:
             table_name=table_name,
             columns=columns,
         )
-        print(f"{schema_name}.{table_name} loaded successfully: {inserted_rows} rows inserted")
+        print(
+            f"{schema_name}.{table_name} loaded successfully: {inserted_rows} rows inserted"
+        )
     finally:
         conn.close()
 

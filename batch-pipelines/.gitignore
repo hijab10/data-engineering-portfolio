@@ -4,9 +4,11 @@ __pycache__/
 airflow/logs/
 .venv
 imp.sh
+.ruff_cache/
 
 # dbt artifacts
 
 dbt/orders/target/
 dbt/orders/dbt_packages/
 dbt/orders/logs/
+logs/
