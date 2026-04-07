@@ -50,6 +50,7 @@ CSV → Airflow DAG → raw.l0_orders → dbt source() → staging.l1_orders →
 - Source-level tests ensure data completeness (e.g. not null checks)
 - Staging layer standardizes raw inputs and enforces consistent data types
 - Business layer aggregates data into analysis-ready models
+```
 
 ### CI/CD
 A GitHub Actions pipeline validates every change by:
