@@ -12,12 +12,12 @@ filtered as (
         invoice_no,
         quantity,
         unit_price,
-        is_cancellation,
+        is_cancelled,
         is_return
     from source
     where invoice_no is not null
       and unit_price is not null
-      and not is_cancellation
+      and not is_cancelled
       and not is_return
 
 ),

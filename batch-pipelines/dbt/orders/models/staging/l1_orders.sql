@@ -31,5 +31,9 @@ select
     case
         when invoice_no like 'C%' then true
         else false
-    end as is_cancelled
+    end as is_cancelled,
+    case
+        when quantity < 0 then true 
+        else false 
+    end as is_return
 from typed
