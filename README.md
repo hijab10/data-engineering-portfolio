@@ -16,6 +16,18 @@ This project implements a layered batch data pipeline using Airflow, PostgreSQL,
 - **Containerization:** Docker  
 - **CI/CD:** GitHub Actions  
 
+
+```mermaid
+flowchart LR
+    A[CSV Data] --> B[Airflow DAG]
+    B --> C[Postgres raw.l0_orders]
+    C --> D[dbt source()]
+    D --> E[staging.l1_orders]
+    E --> F[dbt ref()]
+    F --> G[business.l2_orders_daily]
+
+    H[dbt seed (CI)] --> C
+
 ### Layered data model
 
 - **raw.l0_orders**  
