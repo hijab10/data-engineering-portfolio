@@ -1,11 +1,20 @@
-
 # Batch Pipelines
 
-This folder contains a local batch data platform project built with Airflow, PostgreSQL, Python, and dbt.
+This folder contains a local batch data platform built with Airflow, PostgreSQL, Python, and dbt. It mirrors a production-style setup with layered data modeling, environment-based configuration, and CI validation.
 
 ## Project overview
 
 The pipeline ingests a retail orders dataset into PostgreSQL through Airflow, then transforms it into layered analytical models using dbt.
+
+In CI, raw data ingestion is simulated using dbt seeds to ensure reproducibility without relying on Airflow.
+
+## Architecture
+
+- **Ingestion / orchestration:** Airflow  
+- **Storage:** PostgreSQL  
+- **Transformation:** dbt  
+- **Containerization:** Docker  
+- **CI/CD:** GitHub Actions  
 
 ## Components
 
@@ -22,28 +31,26 @@ The pipeline ingests a retail orders dataset into PostgreSQL through Airflow, th
   Input dataset files
 
 - `dbt/`  
-  Transformation layer and business models
+  Transformation layer (sources, staging, and business models)
 
-## Current warehouse layers
+- `Makefile`  
+  Standardized commands for local development and CI
 
-- `raw.l0_orders`
-- `staging.l1_orders`
-- `business.l2_orders_daily`
+- `requirements.txt`  
+  Python dependencies
 
-## Current functionality
+## Data model
 
-- Load raw orders data from CSV into PostgreSQL via Airflow
-- Standardize and enrich raw data in dbt staging models
-- Build a business-facing daily orders summary model
+- `raw.l0_orders`  
+  Raw ingested data (Airflow in local, dbt seeds in CI)
 
-## Tech stack
+- `staging.l1_orders`  
+  Cleaned and standardized data (type casting, trimming, normalization)
 
-- Airflow 3
-- PostgreSQL
-- Python
-- dbt
-- Docker
+- `business.l2_orders_daily`  
+  Aggregated daily order metrics
 
-## Next step
+## Pipeline flow
 
-Set up CI/CD for testing and deployment workflows.
+```text
+CSV → Airflow DAG → raw.l0_orders → dbt source() → staging.l1_orders → dbt ref() → business.l2_orders_daily

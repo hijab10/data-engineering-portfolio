@@ -2,10 +2,17 @@ name: CI
 
 on:
   pull_request:
+    paths:
+      - 'batch-pipelines/**'
+      - '!batch-pipelines/**/*.md'
+      - '.github/workflows/**'
   push:
     branches:
       - main
-
+    paths:
+      - 'batch-pipelines/**'
+      - '!batch-pipelines/**/*.md'
+      - '.github/workflows/**'
 jobs:
   ci:
     runs-on: ubuntu-latest
