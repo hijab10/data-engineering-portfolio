@@ -1,12 +1,12 @@
 orders:
-  target: dev
+  target: ci
   outputs:
-    dev:
+    ci:
       type: postgres
-      host: localhost
-      user: airflow
-      password: airflow
-      port: 5432
-      dbname: airflow
-      schema: analytics
+      host: "{{ env_var('DBT_HOST') }}"
+      user: "{{ env_var('DBT_USER') }}"
+      password: "{{ env_var('DBT_PASSWORD') }}"
+      port: "{{ env_var('DBT_PORT') | int }}"
+      dbname: "{{ env_var('DBT_DBNAME') }}"
+      schema: "{{ env_var('DBT_SCHEMA') }}"
       threads: 4

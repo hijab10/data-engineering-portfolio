@@ -30,7 +30,6 @@ jobs:
           --health-retries=5
 
     env:
-      DBT_PROFILES_DIR: .github/dbt
       DBT_HOST: postgres
       DBT_PORT: 5432
       DBT_DBNAME: postgres
