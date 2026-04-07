@@ -45,3 +45,45 @@ flowchart LR
 
 ```text
 CSV → Airflow DAG → raw.l0_orders → dbt source() → staging.l1_orders → dbt ref() → business.l2_orders_daily
+
+### Data quality and transformations
+- Source-level tests ensure data completeness (e.g. not null checks)
+- Staging layer standardizes raw inputs and enforces consistent data types
+- Business layer aggregates data into analysis-ready models
+
+### CI/CD
+A GitHub Actions pipeline validates every change by:
+
+- installing dependencies
+- running code quality checks (make package)
+- running tests (pytest)
+- executing dbt build against a containerized PostgreSQL instance
+
+In CI, raw data is simulated using dbt seeds to ensure reproducibility.
+
+### Local development
+
+1. Create a `.env` file inside `batch-pipelines/`:
+
+   ```env
+   DBT_HOST=localhost
+   DBT_PORT=5432
+   DBT_DBNAME=airflow
+   DBT_SCHEMA=analytics
+   DBT_USER=airflow
+   DBT_PASSWORD=airflow
+   ```
+
+2. Run the pipeline:
+
+   ```bash
+   cd batch-pipelines
+   make dbt-build
+   ```
+
+### Notes
+
+* Database credentials are managed via environment variables (no hardcoded secrets)
+* CI and local environments share the same dbt configuration
+* The setup mirrors a production workflow where ingestion and transformation are decoupled
+
