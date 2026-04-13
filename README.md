@@ -1,4 +1,4 @@
-# Data Engineering Portfolio
+# Data Analytics Portfolio
 
 Production-style data pipeline with dbt, Postgres, and CI validation.
 
